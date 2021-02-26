@@ -62,7 +62,7 @@ class Tree(Nodes.Chain):
             tree=tree.rstrip(';')
 
             if tree.count('(') != tree.count(')'):
-              raise TreeError, 'Parentheses do not match in tree: '+tree
+                raise TreeError, 'Parentheses do not match in tree: '+tree
 
             st = self._parse(tree)
             if isinstance(st[1][-1], dict) :
