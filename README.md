@@ -6,8 +6,10 @@
 
 ### Running biopy
 Go to biopy directory and run the following:\
+
 ```cd biopy```\
-`python make_consensus.py -i inp_file -o output_file`
+`python make_consensus.py -i inp_file -o output_file`\
+inp_file is the `clusters_bipart_splits.txt' with the path 
 
 ### Setting up biopy2
 This is a standard python package. To install run 'python setup.py install'.
