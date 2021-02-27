@@ -2,8 +2,9 @@ from ITrees import Tree, NodeData
 import sys, random, os
 import Nodes
 import biopy.parseNewick
+import argparse,sys,os.path
 
-def read_bparts(bpart_file, write_file, min_group_len=10):
+def read_bparts(bpart_file, write_file, min_group_len=2):
     #groups_tree=dict()
     if not os.path.exists(bpart_file):
         sys.exit("Invalid partition split file")
@@ -76,9 +77,19 @@ def get_newick_consensus(clades, dataclass, alltaxa, threshold = 0.5, outgroup=N
     return consensus.toNewick()
 
 def main():
-    bpart_file="../../terminus_ase_noor/data/term/Sample1/cluster_bipart_splits.txt"
-    write_file="../../terminus_ase_noor/data/term/Sample1/consensus_splits.txt"
-    read_bparts(bpart_file, write_file)
+    parser = argparse.ArgumentParser(description = """File input""")
+    parser.add_argument("-i", "--inp_file", type = str, dest = "inp_file",
+                    help="File along with the path to cluster_biparts_splits.txt")
+
+    parser.add_argument("-o", "--out_file", type = str, dest="out_file",
+                    help="Output file where the output of newick trees will be stored")
+    
+    parser.add_argument("-n", "--group_length", type = int, dest="num_trans",
+                    help="Minimum number of transcripts that should be in a group")
+    # bpart_file="../../terminus_ase_noor/data/term/Sample1/cluster_bipart_splits.txt"
+    # write_file="../../terminus_ase_noor/data/term/Sample1/consensus_splits.txt"
+    args = parser.parse_args()
+    read_bparts(args.inp_file, args.out_file, args.num_trans)
 
 if __name__ == "__main__":
     main()
