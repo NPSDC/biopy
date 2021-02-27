@@ -8,7 +8,7 @@
 Go to biopy directory and run the following:\
 
 ```cd biopy```\
-`python make_consensus.py -i inp_file -o output_file`\
+`python make_consensus.py -i inp_file -o output_file -n num_transcripts`\
 inp_file is the `clusters_bipart_splits.txt' with the path 
 
 ### Setting up biopy2
