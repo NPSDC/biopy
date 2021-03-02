@@ -4,8 +4,6 @@
 ### Activate the environment
 `conda activate py2`
 
-### Running biopy
-Go to biopy directory and run the following:\
 
 ### Setting up biopy2
 This is a standard python package. To install run 'python setup.py install'.
@@ -15,6 +13,8 @@ to the PYTHONPATH environment variable.
 For example:
     ```python setup.py install  --home=./`python --version 2>&1 | sed -s "s/Python /version-/"` ```
 
+### Running biopy
+Go to biopy directory and run the following:\
 ```cd biopy```\
 `python make_consensus.py -i inp_file -o output_file -n num_transcripts`\
 inp_file is the `clusters_bipart_splits.txt' with the path 
