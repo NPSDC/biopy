@@ -34,7 +34,6 @@ dependencies:
   - pip:
     - backports-functools-lru-cache==1.6.1
     - backports-shutil-get-terminal-size==1.0.0
-    - biopy==0.1.9
     - decorator==4.4.2
     - enum34==1.1.10
     - ipython==5.10.0
