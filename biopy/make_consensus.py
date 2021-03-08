@@ -16,13 +16,13 @@ def read_bparts(bpart_file, write_file, min_group_len=2):
             group_info = ifile.readline().rstrip().split("\t")
             if(group_info==[""]):
                 break
-            if len(group_info) != 2:
+            if len(group_info) != 3:
                 print(group_info)
                 sys.exit("Invalid name in groups")
-            group = group_info[0].rstrip()
+            group = group_info[1].rstrip()
             alltaxa = set(group.split("_"))
             
-            n_part = int(group_info[1].rstrip())
+            n_part = int(group_info[2].rstrip())
             clades = dict()
             #print(group_info)
             total_groups += 1                
@@ -84,7 +84,7 @@ def main():
     parser.add_argument("-o", "--out_file", type = str, dest="out_file",
                     help="Output file where the output of newick trees will be stored")
     
-    parser.add_argument("-n", "--group_length", type = int, dest="num_trans",
+    parser.add_argument("-n", "--group_length", type = int, dest="num_trans", default=10,
                     help="Minimum number of transcripts that should be in a group")
     # bpart_file="../../terminus_ase_noor/data/term/Sample1/cluster_bipart_splits.txt"
     # write_file="../../terminus_ase_noor/data/term/Sample1/consensus_splits.txt"
