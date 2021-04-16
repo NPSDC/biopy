@@ -4,7 +4,7 @@ import Nodes
 import biopy.parseNewick
 import argparse,sys,os.path
 
-def read_bparts(bpart_file, write_file, min_group_len=2):
+def read_bparts(bpart_file, write_file, min_group_len=2, threshold = 0.5, group_sep = ","):
     #groups_tree=dict()
     if not os.path.exists(bpart_file):
         sys.exit("Invalid partition split file")
@@ -20,7 +20,7 @@ def read_bparts(bpart_file, write_file, min_group_len=2):
                 print(group_info)
                 sys.exit("Invalid name in groups")
             group = group_info[1].rstrip()
-            alltaxa = set(group.split("_"))
+            alltaxa = set(group.split(group_sep))
             
             n_part = int(group_info[2].rstrip())
             clades = dict()
@@ -28,15 +28,15 @@ def read_bparts(bpart_file, write_file, min_group_len=2):
             total_groups += 1                
             for i in range(n_part):
                 bpart = ifile.readline().rstrip().split("\t")
-                txps = bpart[0].rstrip().split("_")
+                txps = bpart[0].rstrip().split(group_sep)
                 clades[str(txps)] = int(bpart[1].rstrip())
             
             if len(alltaxa) >= min_group_len:
-                if(len(alltaxa) != len(group.split("_"))):
+                if(len(alltaxa) != len(group.split(group_sep))):
                     print(group,alltaxa)
                 groups_criteria += 1
                 
-                f.write(get_newick_consensus(clades, NodeData, alltaxa).replace(":0.0","")+";\n")
+                f.write(get_newick_consensus(clades, NodeData, alltaxa, threshold=threshold).replace(":0.0","")+";\n")
     print("Total number of groups that meet criteria", groups_criteria)
     print("Total number of groups", total_groups)
     f.close()
@@ -86,10 +86,13 @@ def main():
     
     parser.add_argument("-n", "--group_length", type = int, dest="num_trans", default=10,
                     help="Minimum number of transcripts that should be in a group")
+
+    parser.add_argument("-t", "--threshold", type = str, dest = "threshold", default=0.5,
+                help="Threshold for clustering")
     # bpart_file="../../terminus_ase_noor/data/term/Sample1/cluster_bipart_splits.txt"
     # write_file="../../terminus_ase_noor/data/term/Sample1/consensus_splits.txt"
     args = parser.parse_args()
-    read_bparts(args.inp_file, args.out_file, args.num_trans)
+    read_bparts(args.inp_file, args.out_file, args.num_trans, args.threshold)
 
 if __name__ == "__main__":
     main()
